@@ -1,0 +1,24 @@
+.select {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 8px;
+}
+
+.input {
+  width: 50ch;
+  height: 25px;
+  border: none;
+  padding-left: 40px;
+  background: #ffffff;
+  border-radius: 10px;
+
+  &:focus {
+    outline: none;
+  }
+}
