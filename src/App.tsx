@@ -1,6 +1,6 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import TauriAPI from "@tauri-apps/api/tauri";
+import * as TauriAPI from "@tauri-apps/api/tauri";
 import "./App.css";
 
 function App() {

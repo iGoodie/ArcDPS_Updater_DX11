@@ -11,7 +11,14 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "writeFile": true,
+        "readFile": true,
+        "createDir": true,
+        "readDir": true,
+        "scope": ["*"]
+      }
     },
     "bundle": {
       "active": true,
@@ -57,7 +64,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "ArcDPS Updater | For DX11",
+        "title": "Arcdps Updater | For DX11",
         "width": 800
       }
     ]
