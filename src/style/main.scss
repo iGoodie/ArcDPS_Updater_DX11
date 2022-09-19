@@ -5,6 +5,7 @@
   width: 100vw;
   height: 100vh;
   background: #443146;
+  overflow: hidden;
 
   &::before {
     content: "";
@@ -34,7 +35,8 @@ h3,
 h4,
 h5,
 h6,
-p {
+p,
+button {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   color: #fff;
@@ -77,11 +79,55 @@ em {
   flex-direction: column;
   align-items: center;
   gap: 35px;
+
+  & > button {
+    border: none;
+  }
 }
 
 .info-grid {
+  & p {
+    display: flex;
+    align-items: center;
+  }
   & em {
     animation: ghostPulse 800ms infinite alternate linear;
+  }
+}
+
+.actions {
+  align-self: end;
+  display: flex;
+  gap: 10px;
+
+  button {
+    border: none;
+    padding: 8px 30px;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    animation: fadeIn 300ms;
+    transition: filter 150ms;
+
+    &:disabled {
+      filter: grayscale(60%) opacity(30%);
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      filter: brightness(80%);
+    }
+    &:active:not(:disabled) {
+      filter: brightness(120%);
+    }
+  }
+
+  .btn-uninstall {
+    background: #cb3333;
+  }
+
+  .btn-update {
+    background: #7f6183;
   }
 }
 

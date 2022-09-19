@@ -2,7 +2,6 @@ import React from "react";
 import * as TauriFs from "@tauri-apps/api/fs";
 import * as TauriHttp from "@tauri-apps/api/http";
 import MD5 from "md5";
-import axios from "axios";
 
 const DLL_NAME = "d3d11.dll";
 const ARCDPS_URL = "https://www.deltaconnected.com/arcdps/x64";

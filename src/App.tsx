@@ -3,6 +3,7 @@ import * as TauriFs from "@tauri-apps/api/fs";
 import { FieldGrid } from "./components/FieldGrid";
 import { FolderSelect } from "./components/FolderSelect";
 import UpdateIcon from "@/assets/icons/update.svg";
+import DoubleUpIcon from "@/assets/icons/double-up.svg";
 import { useAppdata } from "./hooks/appdata.hook";
 import { useLocalDll, useRemoteChecksum } from "./hooks/arcdps.hook";
 import "@/style/main.scss";
@@ -12,6 +13,10 @@ function App() {
   const localDll = useLocalDll(appdata.gameDir || "");
   const remoteMd5 = useRemoteChecksum();
   const [valid, setValid] = React.useState<boolean | null>(null);
+
+  const pending = localDll.pending || !remoteMd5;
+  const localInstalled = !pending && localDll.rawdata != null;
+  const checksumFail = !pending && localInstalled && localDll.md5 !== remoteMd5;
 
   React.useEffect(() => {
     if (appdata.gameDir != null) {
@@ -47,9 +52,19 @@ function App() {
             />
 
             <h4>Local Hash:</h4>
-            <p>
+            <p
+              style={{
+                color: pending
+                  ? undefined
+                  : checksumFail
+                  ? "#ff2929"
+                  : "#36e336",
+              }}
+            >
               {!valid ? (
                 <em>Waiting for Game Directory selection...</em>
+              ) : localDll.pending ? (
+                <em>Calculating MD5 Checksum...</em>
               ) : !localDll.rawdata ? (
                 <em>Arcdps is not installed locally</em>
               ) : (
@@ -58,7 +73,18 @@ function App() {
             </p>
 
             <h4>Remote Hash:</h4>
-            <p>{!remoteMd5 ? <em>Fetching MD5 Checksum...</em> : remoteMd5}</p>
+
+            <p
+              style={{
+                color: pending
+                  ? undefined
+                  : checksumFail
+                  ? "#ff2929"
+                  : "#36e336",
+              }}
+            >
+              {!remoteMd5 ? <em>Fetching MD5 Checksum...</em> : remoteMd5}
+            </p>
 
             <h4>State:</h4>
             <p>
@@ -67,14 +93,28 @@ function App() {
               ) : localDll.pending ? (
                 <em>Calculating Local MD5 Checksum...</em>
               ) : localDll.rawdata == null ? (
-                "Arcdps is ready to be installed"
+                <>Arcdps is ready to be installed</>
               ) : localDll.md5 !== remoteMd5 ? (
-                "New update is available"
+                <>
+                  New update is available!{" "}
+                  <img src={DoubleUpIcon} height={16} />
+                </>
               ) : (
-                "Arcdps is up to date"
+                "Arcdps is up to date :)"
               )}
             </p>
           </FieldGrid>
+
+          <div className="actions">
+            {localInstalled && (
+              <button className="btn-uninstall">Uninstall</button>
+            )}
+            {!pending && (
+              <button className="btn-update" disabled={!checksumFail}>
+                {checksumFail ? "Update Arcdps" : "No Update Available"}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
