@@ -39,7 +39,7 @@
         "icons/icon.ico"
       ],
       "identifier": "net.programmer.igoodie",
-      "longDescription": "",
+      "longDescription": "A Tool to make updating ArcDPS easier (for DX11 update)",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
