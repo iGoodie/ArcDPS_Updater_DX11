@@ -1,6 +1,6 @@
 <!-- Logo -->
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/logo.png" height="30"/>
+  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/update.svg" height="30"/>
   Arcdps Updater
 </h1>
 
@@ -62,18 +62,24 @@
 
 1. Click on "Game Directory" input field. It will ask you to select the game directory then.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-1.png" height="30"/>
+  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-1.png"/>
 </p>
 
 2. If Arcdps is not installed, a "Download Arcdps" button will appear. Click it to download fresh. However, if Arcdps is already installed, the program will look for an update. If available, "Update Arcdps" button will appear. Click it to update Arcdps.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-2.png" height="30"/>
+  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-2.png"/>
 </p>
 
 3. Done! It is as easy as that! You can verify your locally downloaded Arcdps is the same as the one on the website by checking the "Status" field.
 <p align="center">
-  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-3.png" height="30"/>
+  <img src="https://raw.githubusercontent.com/iGoodie/ArcDPS_Updater_DX11/master/.github/assets/guide-3.png"/>
 </p>
+
+## Facing an Issue?
+
+- Join our Discord Server - https://discordapp.com/invite/KNxxdvN
+- Create an issue on Github: https://github.com/iGoodie/ArcDPS_Updater_DX11/issues
+- Contact iGoodie via Discord: iGoodie#1945
 
 ## License
 
