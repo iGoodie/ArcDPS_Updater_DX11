@@ -4,10 +4,13 @@ import { FieldGrid } from "./components/FieldGrid";
 import { FolderSelect } from "./components/FolderSelect";
 import UpdateIcon from "@/assets/icons/update.svg";
 import { useAppdata } from "./hooks/appdata.hook";
+import { useLocalDll, useRemoteChecksum } from "./hooks/arcdps.hook";
 import "@/style/main.scss";
 
 function App() {
   const appdata = useAppdata();
+  const localDll = useLocalDll(appdata.gameDir || "");
+  const remoteMd5 = useRemoteChecksum();
   const [valid, setValid] = React.useState<boolean | null>(null);
 
   React.useEffect(() => {
@@ -32,7 +35,7 @@ function App() {
         </div>
 
         <div className="app-body">
-          <FieldGrid>
+          <FieldGrid className="info-grid">
             <h4>Game Directory:</h4>
             <FolderSelect
               value={appdata.gameDir || ""}
@@ -42,6 +45,35 @@ function App() {
               }}
               state={valid == null ? "pending" : valid ? "valid" : "invalid"}
             />
+
+            <h4>Local Hash:</h4>
+            <p>
+              {!valid ? (
+                <em>Waiting for Game Directory selection...</em>
+              ) : !localDll.rawdata ? (
+                <em>Arcdps is not installed locally</em>
+              ) : (
+                localDll.md5
+              )}
+            </p>
+
+            <h4>Remote Hash:</h4>
+            <p>{!remoteMd5 ? <em>Fetching MD5 Checksum...</em> : remoteMd5}</p>
+
+            <h4>State:</h4>
+            <p>
+              {!remoteMd5 ? (
+                <em>Fetching Remote MD5 Checksum...</em>
+              ) : localDll.pending ? (
+                <em>Calculating Local MD5 Checksum...</em>
+              ) : localDll.rawdata == null ? (
+                "Arcdps is ready to be installed"
+              ) : localDll.md5 !== remoteMd5 ? (
+                "New update is available"
+              ) : (
+                "Arcdps is up to date"
+              )}
+            </p>
           </FieldGrid>
         </div>
       </div>

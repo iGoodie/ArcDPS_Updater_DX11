@@ -18,6 +18,9 @@
         "createDir": true,
         "readDir": true,
         "scope": ["*"]
+      },
+      "http": {
+        "scope": ["https://www.deltaconnected.com/arcdps/*"]
       }
     },
     "bundle": {
