@@ -83,7 +83,7 @@
 
 ## License
 
-&copy; 2021 Taha Anılcan Metinyurt (iGoodie)
+&copy; 2022 Taha Anılcan Metinyurt (iGoodie)
 
 For any part of this work for which the license is applicable, this work is licensed under
 the [Attribution-NonCommercial-NoDerivatives 4.0 International](http://creativecommons.org/licenses/by-nc-nd/4.0/)
