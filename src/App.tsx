@@ -9,10 +9,15 @@ import { useLocalDll, useRemoteChecksum } from "./hooks/arcdps.hook";
 import "@/style/main.scss";
 
 function App() {
+  const [lastUpdated, setLastUpdated] = React.useState(0);
+
   const appdata = useAppdata();
-  const localDll = useLocalDll(appdata.gameDir || "");
+  const localDll = useLocalDll(appdata.gameDir || "", lastUpdated);
   const remoteMd5 = useRemoteChecksum();
+
   const [valid, setValid] = React.useState<boolean | null>(null);
+  const [deleting, setDeleting] = React.useState(false);
+  const [downloading, setDownloading] = React.useState(false);
 
   const pending = localDll.pending || !remoteMd5;
   const localInstalled = !pending && localDll.rawdata != null;
@@ -92,6 +97,8 @@ function App() {
                 <em>Fetching Remote MD5 Checksum...</em>
               ) : localDll.pending ? (
                 <em>Calculating Local MD5 Checksum...</em>
+              ) : !localInstalled ? (
+                <>-</>
               ) : localDll.rawdata == null ? (
                 <>Arcdps is ready to be installed</>
               ) : localDll.md5 !== remoteMd5 ? (
@@ -100,18 +107,46 @@ function App() {
                   <img src={DoubleUpIcon} height={16} />
                 </>
               ) : (
-                "Arcdps is up to date :)"
+                <>Arcdps is up to date :)</>
               )}
             </p>
           </FieldGrid>
 
           <div className="actions">
-            {localInstalled && (
-              <button className="btn-uninstall">Uninstall</button>
+            {(deleting || localInstalled) && (
+              <button
+                className="btn-uninstall"
+                disabled={deleting}
+                onClick={async () => {
+                  setDeleting(true);
+                  await localDll.deleteFile();
+                  setDeleting(false);
+                  setLastUpdated(Date.now());
+                }}
+              >
+                {deleting ? "Uninstalling..." : "Uninstall"}
+              </button>
             )}
             {!pending && (
-              <button className="btn-update" disabled={!checksumFail}>
-                {checksumFail ? "Update Arcdps" : "No Update Available"}
+              <button
+                className="btn-update"
+                disabled={
+                  deleting || downloading || (localInstalled && !checksumFail)
+                }
+                onClick={async () => {
+                  setDownloading(true);
+                  await localDll.downloadFile();
+                  setDownloading(false);
+                  setLastUpdated(Date.now());
+                }}
+              >
+                {downloading
+                  ? "Downloading..."
+                  : !localInstalled
+                  ? "Download Arcdps"
+                  : checksumFail
+                  ? "Update Arcdps"
+                  : "No Update Available"}
               </button>
             )}
           </div>

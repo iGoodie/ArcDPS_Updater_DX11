@@ -4,10 +4,10 @@ import * as TauriHttp from "@tauri-apps/api/http";
 import MD5 from "md5";
 
 const DLL_NAME = "d3d11.dll";
-const ARCDPS_URL = "https://www.deltaconnected.com/arcdps/x64";
 const CHECKSUM_NAME = "d3d11.dll.md5sum";
+const ARCDPS_URL = "https://www.deltaconnected.com/arcdps/x64";
 
-export function useLocalDll(gameDir: string) {
+export function useLocalDll(gameDir: string, lastUpdated: number) {
   const [pending, setPending] = React.useState<boolean>();
   const [rawdata, setRawdata] = React.useState<Uint8Array>();
   const [md5, setMd5] = React.useState<string>();
@@ -25,11 +25,30 @@ export function useLocalDll(gameDir: string) {
     }
   };
 
+  const deleteFile = async () => {
+    const path = `${gameDir}/${DLL_NAME}`;
+    await TauriFs.removeFile(path);
+    setRawdata(undefined);
+    setMd5(undefined);
+  };
+
+  const downloadFile = async () => {
+    const urlpath = `${ARCDPS_URL}/${DLL_NAME}`;
+    const fspath = `${gameDir}/${DLL_NAME}`;
+    const response = await TauriHttp.fetch<Uint8Array>(urlpath, {
+      method: "GET",
+      responseType: TauriHttp.ResponseType.Binary,
+    });
+    setRawdata(undefined);
+    setMd5(undefined);
+    await TauriFs.writeBinaryFile(fspath, response.data);
+  };
+
   React.useEffect(() => {
     readDll();
-  }, [gameDir]);
+  }, [gameDir, lastUpdated]);
 
-  return { pending, rawdata, md5 };
+  return { pending, rawdata, md5, deleteFile, downloadFile };
 }
 
 export function useRemoteChecksum() {
