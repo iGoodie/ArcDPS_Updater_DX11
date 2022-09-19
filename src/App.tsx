@@ -113,7 +113,7 @@ function App() {
           </FieldGrid>
 
           <div className="actions">
-            {(deleting || localInstalled) && (
+            {valid && (deleting || localInstalled) && (
               <button
                 className="btn-uninstall"
                 disabled={deleting}
@@ -127,7 +127,7 @@ function App() {
                 {deleting ? "Uninstalling..." : "Uninstall"}
               </button>
             )}
-            {!pending && (
+            {valid && !pending && (
               <button
                 className="btn-update"
                 disabled={
