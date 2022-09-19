@@ -1,8 +1,9 @@
 {
   "name": "arcdps_updater_dx11",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "author": "iGoodie",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

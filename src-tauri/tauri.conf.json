@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "arcdps_updater_dx11",
-    "version": "0.0.0"
+    "productName": "Arcdps Updater (For DX11)",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -38,7 +38,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "net.programmer.igoodie",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
